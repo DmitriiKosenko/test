@@ -1,0 +1,27 @@
+name: Build Project 67
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          
+      - name: Build with Gradle
+        run: |
+          cd 67
+          ./gradlew clean buildPlugin
+      
+      - name: Copy artifacts to output folder
+        run: |
+          mkdir -p ../output/67
+          cp -R 67/build/distributions/* ../output/67

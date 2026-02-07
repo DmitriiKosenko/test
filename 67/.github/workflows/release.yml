@@ -1,0 +1,54 @@
+# This workflow will build a Java project with Gradle
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+
+name: Java CI for releases
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        env:
+          # see https://www.jetbrains.com/idea/download/previous.html
+          # and https://www.jetbrains.com/intellij-repository/snapshots/
+          - IDEA_VERSION: IC-2022.3.3
+            SINCE_VERSION: 223
+            UNTIL_VERSION: 230.*
+            VERSION_SUFFIX: "-2022"
+          - IDEA_VERSION: IC-2023.1
+            SINCE_VERSION: 230
+            UNTIL_VERSION: 240.*
+            VERSION_SUFFIX: "-2023"
+          - IDEA_VERSION: IC-2023.1
+            SINCE_VERSION: 240
+            UNTIL_VERSION: 250.*
+            VERSION_SUFFIX: "-2024"
+          - IDEA_VERSION: IC-2023.1
+            SINCE_VERSION: 250
+            VERSION_SUFFIX:
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Build with Gradle
+        run: |
+          ./gradlew -PideaVersion=${IDEA_VERSION} -PsinceBuildVersion=${SINCE_VERSION} -PuntilBuildVersion=${UNTIL_VERSION} -PpluginVersion=${GITHUB_REF_NAME}${VERSION_SUFFIX} check buildPlugin
+        env: ${{ matrix.env }}
+
+      - name: Archive distribution artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "antlr-intellij${{matrix.env.VERSION_SUFFIX}}"
+          path: build/distributions/antlr-intellij-plugin-v4-*.zip

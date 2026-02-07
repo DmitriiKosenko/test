@@ -27,11 +27,11 @@ jobs:
           cp -R 67/build/distributions/* ../output/67
 
       - name: Commit and push results
-          run: |
-            git config --global user.name "github-actions"
-            git config --global user.email "github-actions@github.com"
-            git checkout main
-            git add output/projectA
-            git commit -m "Add built artifacts for 67" || echo "No changes to commit."
-            git remote set-url origin https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git
-            git push origin main
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git checkout main
+          git add output/projectA
+          git commit -m "Add built artifacts for 67" || echo "No changes to commit."
+          git remote set-url origin https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git
+          git push origin main

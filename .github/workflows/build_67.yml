@@ -31,7 +31,7 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git checkout main
-          git add output/projectA
+          git add output/67
           git commit -m "Add built artifacts for 67" || echo "No changes to commit."
           git remote set-url origin https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git
           git push origin main

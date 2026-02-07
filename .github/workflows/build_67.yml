@@ -32,5 +32,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit_prefix: "[AUTO-COMMIT] "
           commit_message: "Add output/67"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

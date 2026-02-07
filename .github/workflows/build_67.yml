@@ -27,7 +27,7 @@ jobs:
           cp -R 67/build/distributions/* output/67
 
       - name: Commit and push changes
-        uses: devops-infra/action-commit-push@v.11.4
+        uses: devops-infra/action-commit-push@v1.0.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit_prefix: "[AUTO-COMMIT] "

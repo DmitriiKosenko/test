@@ -26,15 +26,9 @@ jobs:
           mkdir -p ../output/67
           cp -R 67/build/distributions/* ../output/67
 
-      - name: Commit changes
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "Add built artifacts for 67" || echo "No changes to commit."
-      
-      - name: Push changes back to the repo
-        uses: ad-m/git-upload-files-action@master
-        env:
-          REPOSITORY_URL: ${{ secrets.GITHUB_REPOSITORY }}
-          TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      - name: Save outputs to repository
+        uses: ad-m/github-save-output@v7
+        with:
+          path: output/67
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          message: Add built artifacts for projectA
